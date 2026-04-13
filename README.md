@@ -15,6 +15,12 @@ joint work with **Cheng Ouyang** (UIC), **Samy Tindel** (Purdue), and
 Navigation: `→` / `Space` (advance), `←` (back), `Esc` or `O`
 (overview), `F` (fullscreen), `?` (help).
 
+## Preprint
+
+L. Chen, C. Ouyang, S. Tindel, P. Xia,
+*A class of $d$-dimensional directed polymers in a Gaussian environment.*
+**arXiv:2603.06574** — <https://arxiv.org/abs/2603.06574>
+
 ## About the talk
 
 The talk introduces a class of *d*-dimensional continuous directed polymers
