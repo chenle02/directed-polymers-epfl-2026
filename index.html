@@ -1,0 +1,1398 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Directed Polymers in Gaussian Environments — Le Chen — EPFL 2026</title>
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <link rel="stylesheet" href="dist/reveal.css" />
+  <link rel="stylesheet" href="dist/theme/night.css" id="theme" />
+  <link rel="stylesheet" href="mystyle_epfl.css" />
+</head>
+
+<body><div class="reveal"><div class="slides">
+
+<!-- ============================================================
+     ACT I — "Two Gifts from Robert"  (0:00 – 5:00)  ALL LIVE
+     ============================================================ -->
+
+<section>
+
+  <!-- Slide 1 — Title -->
+  <section>
+    <h3 class="r-fit-text">A Class of $d$-Dimensional Directed Polymers<br>
+      in a Gaussian Environment</h3>
+    <p style="font-size:26px; margin-top:20px;">
+      <strong>Le Chen</strong> &nbsp;
+      <span style="color:#888;">(Auburn University)</span>
+    </p>
+    <p style="font-size:26px; color:#aaa;">
+      Joint work with
+      <strong>Cheng Ouyang</strong> (UIC),
+      <strong>Samy Tindel</strong> (Purdue),
+      <strong>Panqiu Xia</strong> (Purdue)
+    </p>
+    <br>
+    <p style="font-size:26px;">
+      Celebrating Probability and Stochastics at EPFL<br>
+      &mdash; retirement conference for
+      <strong>Robert Dalang</strong> and <strong>Thomas Mountford</strong> &mdash;<br>
+      Lausanne, April 13&ndash;15, 2026
+    </p>
+    <p class="dedication">
+      Dedicated to <strong>Robert Dalang</strong>, who gave the two gifts behind this work,
+      <br>and to <strong>Thomas Mountford</strong>, who taught me probability.
+    </p>
+  </section>
+
+  <!-- Slide 2 — The team -->
+  <section>
+    <h3>The Team</h3>
+    <img src="./assets/team/team.jpg" alt="Le Chen, Cheng Ouyang, Samy Tindel, Panqiu Xia"
+         style="max-height:520px; border-radius:10px; margin-top:10px;
+                box-shadow:0 4px 20px rgba(0,0,0,0.5);" />
+    <p style="font-size:22px; color:#aaa; margin-top:14px;">
+      <strong>Cheng Ouyang</strong> (UIC) &middot;
+      <strong>Samy Tindel</strong> (Purdue) &middot;
+      <strong>Le Chen</strong> (Auburn) &middot;
+      <strong>Panqiu Xia</strong> (Cardiff)
+    </p>
+  </section>
+
+</section>
+
+<!-- ============================================================
+     Subject hook — Animation A + classical discrete polymer
+     (own column right after Team, before Gift I)
+     ============================================================ -->
+<section>
+
+  <!-- Animation A — discrete polymer refines into continuous polymer -->
+  <section class="fullscreen-slide" data-background-color="#000">
+    <video class="FullscreenVideo" controls data-autoplay
+           src="./videos/scene_A_discrete_continuous.mp4"></video>
+  </section>
+
+  <!-- Formal definition of the classical (discrete) directed polymer -->
+  <section>
+    <h3 style="margin-bottom:4px;">Classical Directed Polymer</h3>
+    <p style="font-size:28px; color:#aaa; margin:0 0 24px;">
+      Random walk weighted by a random environment
+    </p>
+
+    <div style="display:flex; flex-direction:column; justify-content:space-between;
+                gap:26px; padding:6px 0;">
+      <div class="definition" style="margin:0;">
+        <!-- <p style="margin:0; font-size:26px;"> -->
+          <!-- <strong>Ingredients.</strong> -->
+          <!-- &nbsp;Fix $N \ge 1$. -->
+        <!-- </p> -->
+        <ul style="margin:10px 0 0; font-size:26px; line-height:1.6;">
+          <li><strong>Walk:</strong> simple random walk
+            $S = (S_n)_{n=0,1,\ldots,N}$ on $\mathbb{Z}^d$,
+            $S_0 = 0$; law $\mathbb{P}_0$.</li>
+          <li><strong>Environment:</strong> i.i.d. random variables
+            $\{\xi(n,x) : n \ge 1,\,x \in \mathbb{Z}^d\}$, centered, mean-zero.</li>
+        </ul>
+      </div>
+
+      <div class="theorem fragment fade-in" style="margin:0;">
+        <p style="margin:0; font-size:26px;">
+          <strong>Partition function</strong> and
+          <strong>quenched polymer measure</strong>:
+        </p>
+        $$Z_N(\beta) \;=\; \mathbb{E}_0\!\left[\exp\!\left(
+          \beta\!\sum_{n=1}^N \xi(n, S_n)\right)\right],$$
+        $$\mathbb{P}_N^{\beta,\xi}(\mathrm{d}S)
+          \;=\; \frac{1}{Z_N(\beta)}\,
+          \exp\!\left(\beta\!\sum_{n=1}^N \xi(n, S_n)\right) \mathbb{P}_0(\mathrm{d}S).$$
+      </div>
+
+      <p class="fragment fade-in"
+         style="font-size:26px; margin:0; text-align:center;">
+        <span style="color:#CCFF33;">Huse &amp; Henley '85</span> (physics) &nbsp;·&nbsp;
+        <span style="color:#CCFF33;">Imbrie &amp; Spencer '88</span> (math)
+        &mdash; the subject begins here.
+      </p>
+
+      <p class="fragment fade-in"
+         style="font-size:28px; color:#FFB6C1; margin:0; text-align:center;">
+        Our question: can this be defined in <strong>continuous space-time</strong>?
+      </p>
+    </div>
+  </section>
+
+
+  <!-- Slide 4 — The Challenge -->
+  <section>
+    <h3 style="margin-bottom:4px;">The Challenge</h3>
+    <p style="font-size:28px; color:#aaa; margin:0 0 24px;">
+      From a discrete sum to a continuum integral against $\dot W$
+    </p>
+
+    <div style="display:flex; flex-direction:column; justify-content:space-between;
+                gap:28px; padding:10px 0;">
+      <br>
+      <div style="display:flex; justify-content:space-around;">
+        <div style="flex:1; padding:10px;">
+          <h4 style="color:#44FF88; margin:0 0 10px;">Discrete polymer</h4>
+          <p style="font-size:26px; margin:0;">
+            $$Z_N(\beta) = \mathbb{E}_0\!\left[\exp\!\left(\beta\!\sum_{n=1}^N \xi(n, S_n)\right)\right]$$
+          </p>
+          <p style="font-size:26px; color:#aaa; margin:6px 0 0;">
+            Noise $\xi$ is i.i.d. &mdash; just sum and exponentiate.
+          </p>
+        </div>
+        <div style="flex:1; padding:10px; border-left:1px solid rgba(255,255,255,0.15);">
+          <h4 style="color:#FF6666; margin:0 0 10px;">Continuous polymer?</h4>
+          <p style="font-size:26px; margin:0;">
+            $$\mathcal{Z}(s,y;\,t,x;\,\beta) \stackrel{?}{=}
+              \mathbb{E}_y\!\left[\delta_x(X_t)\,
+              \exp\!\left(\beta\!\int_s^t \dot{W}(r, X_r)\,\mathrm{d}r\right)\right]$$
+          </p>
+          <p style="font-size:22px; color:#aaa; margin:6px 0 0;">
+            Formal Feynman&ndash;Kac with $\delta_y$ IC, endpoint pinned at $x$.
+            But $\dot W$ is a distribution &mdash; the integral
+            <strong>makes no sense</strong>.
+          </p>
+        </div>
+      </div>
+
+      <br>
+      <p class="fragment fade-in"
+         style="font-size:28px; color:#FFB6C1; margin:0; text-align:center;">
+        The classical Feynman&ndash;Kac representation <strong>breaks down</strong><br>
+        when both the initial data and the noise are too rough.
+      </p>
+    </div>
+  </section>
+
+</section>
+
+<!-- ============================================================
+     ACT I — Gift I column: Centered Gaussian noise + Dalang's condition,
+                            plus the colored-noise motivation triptych
+     ============================================================ -->
+<section>
+
+  <!-- Slide 3 — Gift I: Centered Gaussian Noise + Dalang's Condition -->
+  <section>
+    <h3 style="margin-bottom:4px;">Gift I: Dalang's condition</h3>
+    <p style="font-size:28px; color:#aaa; margin:0 0 24px;">
+      Centered Gaussian Noise
+    </p>
+
+    <!-- Equal vertical distribution via flex column -->
+    <div style="display:flex; flex-direction:column; justify-content:space-between;
+                gap:28px; padding:10px 0;">
+
+      <br>
+      <!-- ====  SPATIAL BLOCK (top; reveals SECOND)  ==== -->
+      <div>
+        <!-- Dalang's condition, highlighted -->
+        <div class="fragment fade-in" data-fragment-index="2"
+             style="background:rgba(204,255,51,0.07);
+                    border:2px solid #CCFF33; border-radius:12px;
+                    padding:14px 26px; margin:0 auto 14px; max-width:1150px;
+                    font-size:30px; color:#E8E8E8; text-align:center;
+                    box-shadow:0 0 32px rgba(204,255,51,0.22);">
+          <span style="color:#CCFF33; font-weight:bold;">Dalang's condition:</span>&nbsp;
+          $\displaystyle \Upsilon(\beta) := (2\pi)^{-d}\!
+             \int_{\mathbb{R}^d}\!
+             \frac{\widehat f(\mathrm{d}\xi)}{\beta+|\xi|^2}<\infty$
+          <span style="font-size:24px; color:#aaa;">
+            &nbsp;for some (hence all) $\beta>0$
+          </span>
+        </div>
+        <br>
+        <p class="fragment fade-in" data-fragment-index="2"
+           style="font-size:30px; color:#FFB6C1; margin:0; text-align:center;">
+          <span style="font-weight:bold;">Homogeneous in space</span>
+          &nbsp;·&nbsp;
+          <span style="color:#f4cad1;">$f$ nonnegative &amp; nonnegative-definite</span>
+        </p>
+      </div>
+
+      <br>
+      <!-- ====  CENTRAL COVARIANCE  + pointing arrows  ==== -->
+      <!-- Arrows positioned as % of slide width; tuned to point at the
+           centers of delta_0(t-s) and f(x-y) in the rendered equation.
+           Tweak `left` values if MathJax rendering shifts. -->
+      <div style="position:relative; font-size:46px; text-align:center;">
+        $\mathbb{E}\bigl[\dot W(t,x)\,\dot W(s,y)\bigr]
+         \;=\; \color{#ADD8E6}{\delta_0(t-s)}\;\;\color{#FFB6C1}{f(x-y)}$
+
+        <!-- Up arrow below δ₀ (time side) — reveals with time line (index 1) -->
+        <svg class="fragment fade-in" data-fragment-index="1"
+             style="position:absolute; top:100%; left:60%; transform:translateX(-50%);
+                    width:40px; height:70px; pointer-events:none;"
+             viewBox="0 0 40 70">
+          <line x1="20" y1="65" x2="20" y2="14" stroke="#ADD8E6"
+                stroke-width="3" stroke-linecap="round"/>
+          <polygon points="12,18 28,18 20,4" fill="#ADD8E6"/>
+        </svg>
+
+        <!-- Down arrow above f (space side) — reveals with Dalang block (index 2) -->
+        <svg class="fragment fade-in" data-fragment-index="2"
+             style="position:absolute; bottom:100%; left:83%; transform:translateX(-50%);
+                    width:40px; height:70px; pointer-events:none;"
+             viewBox="0 0 40 70">
+          <line x1="20" y1="5" x2="20" y2="56" stroke="#FFB6C1"
+                stroke-width="3" stroke-linecap="round"/>
+          <polygon points="12,52 28,52 20,66" fill="#FFB6C1"/>
+        </svg>
+      </div>
+
+      <br>
+      <!-- ====  TIME BLOCK (bottom; reveals FIRST)  ==== -->
+      <p class="fragment fade-in" data-fragment-index="1"
+         style="font-size:30px; color:#ADD8E6; margin:0; text-align:center;">
+        <span style="font-weight:bold;">White in time</span>
+        &nbsp;·&nbsp;
+        <span style="color:#cfe7f2;">Martingale theory</span>
+        <span style="font-size:24px; color:#9fc9d8;">
+          (Itô · Walsh · Dalang · C. …)
+        </span>
+        &nbsp;·&nbsp;
+        <span style="color:#cfe7f2;">Nonlinear SPDE $b(u)$</span>
+      </p>
+    </div>
+  </section>
+
+  <!-- Slide 3b — Why spatially colored noise? (text) -->
+  <section>
+    <h3 style="margin-bottom:4px;">Why spatially colored noise?</h3>
+    <p style="font-size:28px; color:#aaa; margin:0 0 24px;">
+      Function-valued SPDEs, universality, and physical models
+    </p>
+
+    <div style="display:flex; flex-direction:column; justify-content:space-between;
+                gap:28px; padding:10px 0;">
+      <br>
+      <ol style="font-size:36px; line-height:1.9; margin:0; padding-left:1.2em;">
+        <li>Function-valued solution instead of
+          <em>singular</em> SPDEs.</li>
+        <li class="fragment fade-in">
+          <strong>Universality</strong> depends on spatial dimension $d$ and
+          the structure of the noise.</li>
+        <li class="fragment fade-in" style="list-style:none; padding-left:0;">
+          <span style="color:#CCFF33;">Medina, Hwa &amp; Kardar '89:</span>
+          <ul style="font-size:34px; line-height:1.7; margin-top:8px;">
+            <li>Random walk in a <em>turbulent flow</em></li>
+            <li>Directed polymer:
+              <span style="color:#aaa;">impurities interacting with the interface;
+              anticorrelated impurities.</span></li>
+            <li>Surface growth with charged ions:
+              <span style="color:#aaa;">interacting via long-range Coulomb force.</span></li>
+          </ul>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- Slide 3c — Great Red Spot (turbulent flow backdrop) -->
+  <!-- CAPTION POSITION: bottom-right corner.
+       KEY RULE: use either `top` OR `bottom`, never both.
+       To anchor by bottom, set top: auto and use bottom: N%. -->
+  <section class="image-backdrop"
+           data-background-image="./assets/colored_noise/Great_Red_Spot_From_Voyager_1.jpg"
+           data-background-size="cover"
+           data-background-position="center">
+    <div class="backdrop-caption fragment fade-left"
+         style="top: auto; bottom: 8px; right: 10px; left: auto; max-width: 40%;">
+      <h2 style="margin:0; color:#fff; font-size:44px;">
+        Random walk in a turbulent flow
+      </h2>
+      <p style="margin:8px 0 0; font-size:24px; color:#CCFF33;">
+        Medina, Hwa &amp; Kardar '89
+      </p>
+      <p style="margin:16px 0 0; font-size:18px; color:rgba(255,255,255,0.7);
+                font-style:italic;">
+        Great Red Spot, Voyager I (1979)
+        &middot; <span style="opacity:0.8;">Wikipedia</span>
+      </p>
+    </div>
+  </section>
+
+  <!-- Slide 3d — Singular SPDEs landscape -->
+  <!-- CAPTION POSITION: edit top/right below.  Units: % of slide. -->
+  <section class="image-backdrop"
+           data-background-image="./assets/colored_noise/Singular_SPDEs_landscape.jpg"
+           data-background-size="cover"
+           data-background-position="center">
+    <div class="backdrop-caption fragment fade-left" style="top: 0%; right: 20%; max-width: 53%;">
+      <h2 style="margin:0; color:#fff; font-size:44px;">
+        Classical vs. Singular SPDEs
+      </h2>
+      <p style="margin:8px 0 0; font-size:24px; color:#CCFF33;">
+        From smooth solutions to renormalization
+      </p>
+      <p style="margin:16px 0 0; font-size:18px; color:rgba(255,255,255,0.7);
+                font-style:italic;">
+        Image: Le Chen / OpenAI Sora
+      </p>
+    </div>
+  </section>
+
+  <!-- Slide 3e — The Regularity Barrier -->
+  <!-- CAPTION POSITION: edit top/right below.  Units: % of slide. -->
+  <section class="image-backdrop"
+           data-background-image="./assets/colored_noise/Singular_SPDEs_regularity_barrier.jpg"
+           data-background-size="cover"
+           data-background-position="center">
+    <div class="backdrop-caption fragment fade-left" style="top: 60%; right: 35%; max-width: 46%;">
+      <h2 style="margin:0; color:#fff; font-size:44px;">
+        The Regularity Barrier
+      </h2>
+      <p style="margin:8px 0 0; font-size:24px; color:#CCFF33;">
+        Classical SPDEs vs. Singular SPDEs
+      </p>
+      <p style="margin:16px 0 0; font-size:18px; color:rgba(255,255,255,0.7);
+                font-style:italic;">
+        Image: Le Chen / Nano Banana Pro
+      </p>
+    </div>
+  </section>
+
+</section>
+
+ <section>
+  <!-- Slide — Gift II (part 1): Rough Initial Data — admissibility -->
+  <section>
+    <h3 style="margin-bottom:4px;">Gift II: Rough Initial Data</h3>
+    <p style="font-size:28px; color:#ADD8E6; margin:0 0 24px;">
+      L. Chen &amp; R. Dalang,
+      <em>Moments and growth indices for the nonlinear SHE with rough
+        initial conditions</em> (thesis 2013, paper 2015)
+    </p>
+
+    <div style="display:flex; flex-direction:column; justify-content:space-between;
+                gap:28px; padding:10px 0;">
+      <br>
+      <div class="definition" style="margin:0;">
+        <p style="margin:0; font-size:28px;">
+          <strong>Admissible initial data.</strong>
+          A (signed) measure $\mu$ on $\mathbb{R}^d$ with
+        </p>
+        <p style="margin:12px 0 0; text-align:center; font-size:30px;">
+          $\displaystyle \int_{\mathbb{R}^d}\! e^{-a|x|^2}\,|\mu|(\mathrm{d}x) < \infty
+           \quad\text{for every } a > 0.$
+        </p>
+      </div>
+
+      <br>
+      <p class="fragment fade-in" style="font-size:28px; margin:0; text-align:center;">
+        Any measure whose tails decay faster than a Gaussian &mdash;
+        including <strong>$\mu = \delta_y$</strong>.
+      </p>
+
+      <p class="fragment fade-in"
+         style="font-size:30px; color:#FFB6C1; margin:0; text-align:center;">
+        The Dirac mass is <em>admissible</em> &mdash; and it is the key.
+      </p>
+    </div>
+  </section>
+
+  <!-- Slide — Gift II (part 2): The 4-parameter SPDE for Z, making the
+       formal Feynman-Kac expression rigorous -->
+  <section>
+    <h3 style="margin-bottom:4px;">Point-to-Point Partition Field $\mathcal{Z}$</h3>
+    <p style="font-size:26px; color:#aaa; margin:0 0 22px;">
+      The SPDE gives rigorous meaning to the formal Feynman&ndash;Kac object
+    </p>
+
+    <div style="display:flex; flex-direction:column; justify-content:space-between;
+                gap:22px; padding:6px 0;">
+      <!-- Recall the formal expression from the Challenge slide -->
+      <div style="background:rgba(255,102,102,0.07); border-left:3px solid #FF6666;
+                  padding:10px 18px; margin:0; font-size:24px;">
+        <p style="margin:0; color:#FF6666;">
+          <strong>Recall (Challenge slide &mdash; ill-defined):</strong>
+        </p>
+        <p style="margin:6px 0 0; text-align:center;">
+          $\displaystyle \mathcal{Z}(s,y;\,t,x;\,\beta)
+           \stackrel{?}{=} \mathbb{E}_y\!\left[\delta_x(X_t)\,
+           \exp\!\left(\beta\!\int_s^t \dot W(r,X_r)\,\mathrm{d}r\right)\right].$
+        </p>
+      </div>
+
+      <!-- SPDE for Z -->
+      <div class="fragment fade-in theorem" style="margin:0;">
+        <p style="margin:0; font-size:26px;">
+          <strong>Rigorous construction.</strong>
+          &nbsp;$\mathcal{Z}(s,y;\,t,x;\,\beta)$ is the (unique, It&ocirc;-renormalized)
+          solution to
+        </p>
+        $$\Bigl(\tfrac{\partial}{\partial t} - \tfrac{1}{2}\Delta_x\Bigr)\,\mathcal{Z}
+          \;=\; \beta\,\mathcal{Z}\,\dot W(t,x),$$
+        <p style="margin:4px 0 0; text-align:center; font-size:26px;">
+          with initial condition &nbsp;
+          $\displaystyle \lim_{t\downarrow s}\mathcal{Z}(s,y;\,t,\cdot;\,\beta)
+           = \color{#CCFF33}{\boldsymbol{\delta_y(\cdot)}}.$
+        </p>
+      </div>
+
+      <p class="fragment fade-in"
+         style="font-size:28px; color:#44FF88; margin:0; text-align:center;">
+        The SPDE solution <strong>is</strong> the meaning of the formal expression above.
+      </p>
+    </div>
+  </section>
+
+  <!-- Slide 5 — Why SHE?  [COMMENTED OUT for time; kept here for restore].
+  <section>
+    <h3 style="margin-bottom:4px;">Why the Stochastic Heat Equation?</h3>
+    <p style="font-size:28px; color:#aaa; margin:0 0 24px;">
+      The Feynman&ndash;Kac connection: <em>heat diffusion $=$ path probability</em>
+    </p>
+
+    <div style="display:flex; flex-direction:column; justify-content:space-between;
+                gap:28px; padding:10px 0;">
+      <br>
+      <div class="highlight-box fragment fade-in" style="margin:0;">
+        $$\left(\frac{\partial}{\partial t} - \frac{1}{2}\Delta\right) u(t,x)
+          \;=\; \beta\, u(t,x)\,\dot{W}(t,x)$$
+      </div>
+
+      <br>
+      <p class="fragment fade-in"
+         style="font-size:26px; margin:0; text-align:center;">
+        The solution $u(t,x)$ with $u(0,\cdot)=\delta_y$ gives the
+        <strong>transition density</strong> of the polymer.
+      </p>
+
+      <br>
+      <p class="fragment fade-in"
+         style="font-size:28px; color:#ADD8E6; margin:0; text-align:center;">
+        The SHE is the engine that generates probabilities<br>
+        for where the polymer is allowed to go.
+      </p>
+    </div>
+  </section>
+  -->
+
+  <!-- ("Where Both Gifts Meet" was merged into the Gift II slide above. -->
+
+</section>
+
+<!-- ============================================================
+     ACT II — "Building the Polymer"  (5:00 – 12:00)
+     LIVE + ANIMATIONS A, B
+     ============================================================ -->
+
+<section>
+
+  <!-- Slide 7 — Structural Properties -->
+  <section>
+    <h3 style="margin-bottom:4px;">Structural Properties of $\mathcal{Z}$</h3>
+    <p style="font-size:28px; color:#aaa; margin:0 0 24px;">
+      Five properties that make it a genuine transition kernel
+    </p>
+
+    <div style="display:flex; flex-direction:column; justify-content:space-between;
+                gap:28px; padding:10px 0;">
+      <br>
+      <ul style="font-size:26px; line-height:1.9; margin:0;">
+        <li><strong style="color:#CCFF33;">Positivity:</strong>
+          $\mathcal{Z}(s,y;\,t,x;\,\beta) > 0$ &nbsp; a.s.</li>
+        <li class="fragment fade-in"><strong style="color:#CCFF33;">Centrality:</strong>
+          $\mathbb{E}[\mathcal{Z}] = p_{t-s}(x-y)$ &nbsp;(the heat kernel)</li>
+        <li class="fragment fade-in"><strong style="color:#CCFF33;">Stationarity:</strong>
+          invariant under time-space shifts</li>
+        <li class="fragment fade-in"><strong style="color:#CCFF33;">Chapman&ndash;Kolmogorov:</strong>
+          $$\mathcal{Z}(s,y;\,t,x) = \int_{\mathbb{R}^d}\mathcal{Z}(s,y;\,r,z)\;\mathcal{Z}(r,z;\,t,x)\,\mathrm{d}z$$</li>
+        <li class="fragment fade-in"><strong style="color:#CCFF33;">Independence:</strong>
+          on disjoint time intervals</li>
+      </ul>
+
+      <br>
+      <p class="fragment fade-in"
+         style="font-size:28px; color:#FFB6C1; margin:0; text-align:center;">
+        Exactly what's needed to build a <strong>path measure</strong>.
+      </p>
+    </div>
+  </section>
+
+  <!-- Slide 8 — Polymer Measure -->
+  <section>
+    <h3 style="margin-bottom:4px;">The Polymer Measure</h3>
+    <p style="font-size:26px; color:#aaa; margin:0 0 20px;">
+      Replacing the ill-defined Gibbs measure with a chain of SHE kernels
+    </p>
+
+    <div style="display:flex; flex-direction:column; justify-content:space-between;
+                gap:20px; padding:6px 0;">
+      <!-- Formal Gibbs measure (ill-defined) -->
+      <div style="background:rgba(255,102,102,0.07); border-left:3px solid #FF6666;
+                  padding:10px 18px; margin:0; font-size:24px;">
+        <p style="margin:0; color:#FF6666;">
+          <strong>Formal Gibbs measure</strong> (ill-defined):
+        </p>
+        <p style="margin:6px 0 0; text-align:center;">
+          $\displaystyle \frac{\mathrm{d}\mathbb{P}_\beta^W}{\mathrm{d}\mathbb{P}_0}(X)
+           \stackrel{?}{=} \frac{1}{Z_T}\,
+           \exp\!\left(\beta\!\int_0^T \dot W(s, X_s)\,\mathrm{d}s\right).$
+        </p>
+      </div>
+
+      <!-- Rigorous: finite-dim distributions via chain of SHE kernels -->
+      <div class="fragment fade-in theorem" style="margin:0;">
+        <p style="margin:0; font-size:26px;">
+          <strong>Quenched polymer measure (rigorous).</strong>
+          &nbsp;For $0 = t_0 < t_1 < \cdots < t_k < t_{k+1} = 1$:
+        </p>
+        $$\mathbb{P}_\beta^W\!\left(X_{t_1}\!\in\!\mathrm{d}x_1,\ldots,X_{t_k}\!\in\!\mathrm{d}x_k\right)$$
+        $$ \;=\; \frac{\displaystyle\prod_{j=0}^{k}\mathcal{Z}(t_j,x_j;\,t_{j+1},x_{j+1};\,\beta)}
+                 {\mathcal{Z}(0,0;\,1,\ast;\,\beta)}\;
+          \mathrm{d}x_1\cdots\mathrm{d}x_k$$
+      </div>
+
+      <p class="fragment fade-in"
+         style="font-size:28px; color:#44FF88; margin:0; text-align:center;">
+        The chain of SHE kernels <strong>is</strong> the rigorous meaning of the Gibbs measure.
+      </p>
+    </div>
+  </section>
+
+  <!-- (Animation A + Discrete Polymer formal slide moved to own column
+       right after Team — see below, column h=1.) -->
+
+  <!-- Slide 10 — Itô Renormalization -->
+  <section>
+    <h3 style="margin-bottom:4px;">It&#244; Renormalization</h3>
+    <p style="font-size:28px; color:#aaa; margin:0 0 24px;">
+      Mollify the noise, subtract the divergent counterterm, take the limit
+    </p>
+
+    <div style="display:flex; flex-direction:column; justify-content:space-between;
+                gap:26px; padding:6px 0;">
+      <br>
+      <p style="font-size:28px; margin:0; text-align:center;">
+        Mollify the noise: $W^\varepsilon$ smooth in space.
+      </p>
+
+      <div class="highlight-box fragment fade-in" style="margin:0;">
+        $$\mathcal{E}_\varepsilon(W,X)
+          = \exp\!\left(\beta\!\int_0^1\! W^\varepsilon(\mathrm{d}s, X_s)
+          - \tfrac{\beta^2}{2}\,k_\varepsilon(0)\right)$$
+      </div>
+
+      <p class="fragment fade-in" style="font-size:28px; margin:0; text-align:center;">
+        The subtraction $\tfrac{\beta^2}{2}k_\varepsilon(0)$ filters out the divergence.
+      </p>
+
+      <p class="fragment fade-in"
+         style="font-size:26px; color:#aaa; font-style:italic; margin:0; text-align:center;">
+        &ldquo;Like weighing a feather on a scale that constantly adds
+        a million pounds of random pressure.&rdquo;
+      </p>
+
+      <p class="fragment fade-in"
+         style="font-size:30px; color:#CCFF33; margin:0; text-align:center;">
+        Take $\varepsilon \to 0$: converges to the SHE solution $\mathcal{Z}$.
+      </p>
+    </div>
+  </section>
+
+  <!-- Slide 11 — Under the Microscope (Local Path Behavior) -->
+  <section>
+    <h3 style="margin-bottom:4px;">Under the Microscope</h3>
+    <p style="font-size:28px; color:#aaa; margin:0 0 24px;">
+      Polymer paths have the same local geometry as Brownian motion
+    </p>
+
+    <div style="display:flex; flex-direction:column; justify-content:space-between;
+                gap:28px; padding:6px 0;">
+      <br>
+      <div class="theorem" style="margin:0;">
+        <p style="margin:0;">
+          <strong>Theorem (Local path behavior).</strong>
+          <span style="font-size:22px; color:#FFB6C1; margin-left:10px;">
+            [C.&ndash;Ouyang&ndash;Tindel&ndash;Xia, '26+]
+          </span>
+        </p>
+        <p style="margin:14px 0 0; font-size:28px; line-height:1.6;">
+          Under $\mathbb{P}_\beta^W$:
+        </p>
+        <ul style="font-size:28px; line-height:1.6; margin:6px 0 0;">
+          <li>Paths are $C^{1/2-\varepsilon}$ for every $\varepsilon > 0$.</li>
+          <li>Quadratic variation: $\langle X \rangle_t = t\,I_d$.</li>
+        </ul>
+      </div>
+
+      <p class="fragment fade-in"
+         style="font-size:30px; color:#ADD8E6; margin:0; text-align:center;">
+        Under the microscope, the polymer <strong>IS</strong> Brownian motion.
+      </p>
+
+      <p class="fragment fade-in"
+         style="font-size:26px; color:#aaa; margin:0; text-align:center;">
+        Same roughness &middot; same quadratic variation &middot; indistinguishable locally.
+      </p>
+    </div>
+  </section>
+
+  <!-- Slide 12 — Animation B: Split-Screen Illusion -->
+  <section class="fullscreen-slide" data-background-color="#000">
+    <video class="FullscreenVideo" controls data-autoplay
+           src="./videos/scene_B_split_screen.mp4"></video>
+  </section>
+
+</section>
+
+<!-- ============================================================
+     ACT III — "The Surprise"  (12:00 – 20:00)
+     DRAMATIC CORE + ANIMATIONS C, D
+     ============================================================ -->
+
+<section>
+
+  <!-- Slide 14 — THE DICHOTOMY -->
+  <section>
+    <h3>The Singularity Dichotomy</h3>
+    <div class="theorem" style="text-align:center; padding:30px;">
+      <p style="margin:0;">
+        <strong>Theorem (Sharp criterion).</strong>
+        <span style="font-size:22px; color:#FFB6C1; margin-left:10px;">
+          [C.&ndash;Ouyang&ndash;Tindel&ndash;Xia, '26+]
+        </span>
+      </p>
+      <br>
+      <p style="font-size:28px;">
+        $\displaystyle\widehat{f}(\mathbb{R}^d) = \infty$
+        &ensp;$\Longleftrightarrow$&ensp;
+        <span class="singular-symbol">$\mathbb{P}_\beta^W \perp \mathbb{P}_0$</span>
+        &ensp; a.s.
+      </p>
+      <br>
+      <p style="font-size:28px;">
+        $\displaystyle\widehat{f}(\mathbb{R}^d) < \infty$
+        &ensp;$\Longleftrightarrow$&ensp;
+        <span class="equivalent-symbol">$\mathbb{P}_\beta^W \sim \mathbb{P}_0$</span>
+        &ensp; a.s.
+      </p>
+    </div>
+    <p class="fragment fade-in" style="font-size:26px; margin-top:20px;">
+      The <strong>spectral mass</strong> alone decides everything.
+    </p>
+  </section>
+
+  <!-- Slide 15 — What Singularity Means -->
+  <section>
+    <h3>What Does $\mathbb{P}_\beta^W \perp \mathbb{P}_0$ Mean?</h3>
+    <p style="font-size:26px; margin-top:20px;">
+      There exists a set $A_W$ of paths such that:
+    </p>
+    <ul style="font-size:26px; line-height:2.2;">
+      <li class="fragment fade-in">$\mathbb{P}_\beta^W(A_W) = 1$ &mdash; the polymer lives here</li>
+      <li class="fragment fade-in">$\mathbb{P}_0(A_W) = 0$ &mdash; Brownian motion never visits</li>
+    </ul>
+    <p class="fragment fade-in" style="font-size:26px; margin-top:30px; color:#FFB6C1; font-style:italic;">
+      &ldquo;Two counterfeit paintings. Under a magnifying glass, the brushstrokes<br>
+      look identical. But under UV light, one is made of completely different paint.&rdquo;
+    </p>
+  </section>
+
+  <!-- (Spectral Hierarchy + Bessel slides moved to new Examples column h=6 below.) -->
+
+  <!-- Slide 16c — Transition: how do we prove singularity? -->
+  <section data-transition="fade">
+    <h3 style="margin-bottom:4px; color:#FFB6C1;">How do we prove it?</h3>
+    <p style="font-size:28px; color:#aaa; margin:0 0 36px;">
+      Radon&ndash;Nikodym meets dyadic martingale meets Wiener chaos
+    </p>
+
+    <div style="display:flex; flex-direction:column; justify-content:space-between;
+                gap:32px; padding:10px 0; font-size:30px; line-height:1.5;">
+      <br>
+      <p class="fragment fade-in" style="margin:0; text-align:center;">
+        <span style="color:#CCFF33;">1.</span>
+        Restrict to a <strong>dyadic skeleton</strong> of times.
+      </p>
+      <p class="fragment fade-in" style="margin:0; text-align:center;">
+        <span style="color:#CCFF33;">2.</span>
+        Form the likelihood ratio $Y_n$ &mdash;
+        a <strong>positive martingale</strong>.
+      </p>
+      <p class="fragment fade-in" style="margin:0; text-align:center;">
+        <span style="color:#CCFF33;">3.</span>
+        Decompose $\log Y_n$ via <strong>Wiener chaos</strong>;
+        read off a negative drift.
+      </p>
+      <br>
+      <p class="fragment fade-in"
+         style="margin:0; text-align:center; font-size:28px; color:#ADD8E6;">
+        Spectral mass controls the drift &nbsp;$\Rightarrow$&nbsp;
+        $Y_n \to 0$ or $Y_n \to Y > 0$.
+      </p>
+    </div>
+  </section>
+
+  <!-- Slide 17 — Animation C: Martingale Collapse -->
+  <section class="fullscreen-slide" data-background-color="#000">
+    <video class="FullscreenVideo" controls data-autoplay
+           src="./videos/scene_C_martingale.mp4"></video>
+  </section>
+
+  <!-- Slide 19 — Trace-class = Equivalent -->
+  <section>
+    <h3 style="margin-bottom:4px;">Trace-Class: Equivalence</h3>
+    <p style="font-size:28px; color:#aaa; margin:0 0 24px;">
+      When $\widehat{f}(\mathbb{R}^d) < \infty$, noise is evaluated
+      <em>along the path</em>
+    </p>
+
+    <div style="display:flex; flex-direction:column; justify-content:space-between;
+                gap:28px; padding:10px 0;">
+      <br>
+      <div class="highlight-box fragment fade-in" style="margin:0;">
+        $$\frac{\mathrm{d}\mathbb{P}_\beta^W}{\mathrm{d}\mathbb{P}_0}
+          = \frac{1}{\mathcal{Z}_1}\,
+            \exp\!\left(\beta\!\int_0^1\! W(\mathrm{d}s, X_s)
+            \;-\; \frac{\beta^2}{2}\,\widehat{f}(\mathbb{R}^d)\right)$$
+      </div>
+
+      <br>
+      <p class="fragment fade-in"
+         style="font-size:26px; margin:0; text-align:center;">
+        A bona fide <strong>exponential martingale</strong>:
+        positive, finite, $L^2$-bounded.
+      </p>
+
+      <p class="fragment fade-in"
+         style="font-size:22px; color:#aaa; margin:0; text-align:center;">
+        [Rovira &amp; Tindel '05] &middot;
+        [Lacoin '11] &middot;
+        Comets '17 textbook
+      </p>
+
+      <br>
+      <p class="fragment fade-in"
+         style="font-size:28px; color:#44FF88; margin:0; text-align:center;">
+        The two measures see the <strong>same</strong> paths &mdash;
+        just with different probabilities.
+      </p>
+    </div>
+  </section>
+
+  <!-- End of h=3 (Dichotomy & proof column). -->
+</section>
+
+<!-- ============================================================
+     Act III continued — WEAK DISORDER & PHASES (own Reveal column)
+     ============================================================ -->
+<section>
+
+  <!-- Transition — Two Orthogonal Classifications -->
+  <section data-transition="fade">
+    <h3 style="margin-bottom:4px;">Two Orthogonal Classifications</h3>
+    <p style="font-size:28px; color:#aaa; margin:0 0 24px;">
+      <span style="color:#FFB6C1;">Dichotomy</span> (measure-theoretic, just proved)
+      &nbsp;·&nbsp;
+      <span style="color:#ADD8E6;">Weak / Strong disorder</span> (fluctuation class, next)
+    </p>
+
+    <!-- Flex column wrapper: evenly distributes table + punchline. -->
+    <div style="display:flex; flex-direction:column; justify-content:space-between;
+                gap:28px; padding:6px 0;">
+      <br>
+
+      <!-- 2x2 table at maximum readable size -->
+      <table style="width:96%; margin:0 auto; border-collapse:collapse;
+                    font-size:26px;">
+        <thead>
+          <tr style="color:#aaa;">
+            <th style="padding:10px;"></th>
+            <th style="padding:10px; color:#FFB6C1;">
+              Equivalent<br>
+              <span style="font-size:22px; font-weight:normal;">(trace-class)</span>
+            </th>
+            <th style="padding:10px; color:#FF4444;">
+              Singular<br>
+              <span style="font-size:22px; font-weight:normal;">(non-trace-class)</span>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="fragment fade-in" data-fragment-index="1">
+            <th style="padding:16px 10px; color:#44FF88; text-align:right;
+                       font-size:28px;">
+              Weak<br>disorder
+              <div style="font-size:20px; font-weight:normal; color:#aaa;
+                          margin-top:4px;">
+                $d \ge 3$,<br>$\beta < \beta_0$,<br>$\Upsilon(0) < \infty$
+              </div>
+            </th>
+            <td style="padding:16px 14px; border:1px solid rgba(255,255,255,0.2);
+                       background:rgba(68,255,136,0.08);">
+              Classical CLT<br>
+              <span style="font-size:22px; color:#aaa;">
+                (Rovira&ndash;Tindel &amp; extensions)
+              </span>
+            </td>
+            <td style="padding:16px 14px; border:1px solid rgba(255,255,255,0.2);
+                       background:rgba(68,255,136,0.08);">
+              <strong>CLT still holds!</strong><br>
+              <span style="font-size:22px; color:#aaa;">
+                singular measures, Gaussian fluctuations
+              </span>
+            </td>
+          </tr>
+          <tr class="fragment fade-in" data-fragment-index="2">
+            <th style="padding:16px 10px; color:#FF6666; text-align:right;
+                       font-size:28px;">
+              Strong<br>disorder
+              <div style="font-size:20px; font-weight:normal; color:#aaa;
+                          margin-top:4px;">
+                $d \le 2$ &nbsp;or<br>
+                $\beta \ge \beta_0$ &nbsp;or<br>
+                $\Upsilon(0) = \infty$
+              </div>
+            </th>
+            <td style="padding:16px 14px; border:1px solid rgba(255,255,255,0.2);
+                       background:rgba(255,102,102,0.06);">
+              Largely open<br>
+              <span style="font-size:22px; color:#aaa;">
+                (conjectural new universality)
+              </span>
+            </td>
+            <td style="padding:16px 14px; border:1px solid rgba(255,255,255,0.2);
+                       background:rgba(255,102,102,0.06);">
+              Largely open<br>
+              <span style="font-size:22px; color:#aaa;">
+                (conjectural new universality)
+              </span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <br>
+      <p class="fragment fade-in" data-fragment-index="3"
+         style="font-size:30px; color:#CCFF33; margin:0; text-align:center;">
+        Different questions &mdash; with a shared spectral input.
+      </p>
+    </div>
+  </section>
+
+  <!-- Slide 20 — Why d ≥ 3? (Pólya, motivates the CLT hypothesis) -->
+  <section>
+    <h3 style="margin-bottom:4px;">Why $d \ge 3$?</h3>
+    <p style="font-size:26px; color:#ADD8E6; margin:0 0 24px;">
+      P&oacute;lya's theorem (1921) &mdash; recurrence vs. transience
+    </p>
+
+    <div style="display:flex; justify-content:space-around; margin-top:10px;">
+      <div style="flex:1; text-align:center;">
+        <p style="font-size:60px; margin:0;">&#128694;</p>
+        <p style="font-size:26px; margin:10px 0 0;"><strong>$d \le 2$: Recurrent</strong></p>
+        <p style="font-size:26px; color:#FF6666; margin:10px 0 0;">
+          &ldquo;A drunk man will find his way home.&rdquo;<br>
+          Path keeps crossing its own trail &mdash;<br>
+          trapped in the same mud forever.
+        </p>
+      </div>
+      <br>
+      <div style="flex:1; text-align:center;">
+        <p style="font-size:60px; margin:0;">&#128038;</p>
+        <p style="font-size:26px; margin:10px 0 0;"><strong>$d \ge 3$: Transient</strong></p>
+        <p style="font-size:26px; color:#44FF88; margin:10px 0 0;">
+          &ldquo;A drunk bird may get lost forever.&rdquo;<br>
+          Enough spatial volume to escape &mdash;<br>
+          entropy defeats energy.
+        </p>
+      </div>
+    </div>
+    <br>
+    <p class="fragment fade-in" style="font-size:26px; margin-top:28px; text-align:center;">
+      Transience translates to $\displaystyle\int_0^\infty\! f(X_s - \widetilde{X}_s)\,\mathrm{d}s < \infty$
+      &mdash; preventing strong localization.
+    </p>
+  </section>
+
+  <!-- Slide 21 — Weak Disorder Regime (diffusive CLT) -->
+  <section>
+    <h3 style="margin-bottom:4px;">Weak Disorder Regime</h3>
+    <p style="font-size:26px; color:#aaa; margin:0 0 24px;">
+      $d \ge 3$ &nbsp;·&nbsp; $\beta < \beta_0$ &nbsp;·&nbsp;
+      $\Upsilon(0) < \infty$
+      <span style="font-size:22px;">
+        &nbsp;(<em>slightly weaker than trace-class</em>)
+      </span>
+    </p>
+
+    <div style="display:flex; flex-direction:column; justify-content:space-between;
+                gap:28px; padding:6px 0;">
+      <br>
+      <div class="theorem" style="margin:0;">
+        <p style="margin:0;">
+          <strong>Theorem (Diffusive CLT).</strong>
+          <span style="font-size:24px; color:#FFB6C1; margin-left:10px;">
+            [C.&ndash;Ouyang&ndash;Tindel&ndash;Xia, '26+]
+          </span>
+        </p>
+        <p style="margin:14px 0 0;">
+          If $d \ge 3$, $\Upsilon(0) < \infty$,
+          and $\beta < \beta_0 := \frac{1}{2\,\Upsilon(0)^{1/2}}$, then
+        </p>
+        $$\mathbb{E}_T^{\beta,W}\!\left[g\!\left(\frac{X_T}{\sqrt{T}}\right)\right]
+        \;\xrightarrow[\;\text{in prob.}\;]{\;\;T\to\infty\;\;}\;
+          \int g\,\mathrm{d}\nu, \quad \nu = N(0, I_d).$$
+      </div>
+
+      <br>
+      <p class="fragment fade-in"
+         style="font-size:30px; margin:0; text-align:center;">
+        The polymer <strong>forgets the environment</strong> and diffuses like free Brownian motion.
+      </p>
+
+      <p style="font-size:22px; color:#aaa;
+                margin:8px 0 0; text-align:center;">
+        Subtlety: &nbsp;$\Upsilon(0) < \infty$ is <em>not</em>
+        $\widehat f(\mathbb{R}^d) < \infty$ &mdash;
+        the $1/|\xi|^2$ kernel tames some non-trace-class tails in $d \ge 3$.
+      </p>
+    </div>
+  </section>
+
+  <!-- Slide 22 — Animation D: Phase Diagram (visual summary of both regimes) -->
+  <section class="fullscreen-slide" data-background-color="#000">
+    <video class="FullscreenVideo" controls data-autoplay
+           src="./videos/scene_D_phase_diagram.mp4"></video>
+  </section>
+
+</section>
+
+<!-- ============================================================
+     Act III — EXAMPLES & CONDITIONS ON f  (own column)
+     ============================================================ -->
+<section>
+
+  <!-- Spectral Hierarchy (moved from dichotomy column) -->
+  <section>
+    <h3 style="margin-bottom:4px;">Spectral Hierarchy</h3>
+    <p style="font-size:26px; color:#aaa; margin:0 0 18px;">
+      Which noise $f$ lands in which regime?
+    </p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Noise type $f$</th>
+          <th>$\widehat{f}(\mathbb{R}^d)$</th>
+          <th>Dalang?</th>
+          <th>Verdict</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Space-time white ($d=1$)</td>
+          <td>$\infty$</td>
+          <td style="color:#44FF88;">Yes</td>
+          <td style="color:#FF4444;">$\perp$</td>
+        </tr>
+        <tr>
+          <td>Riesz kernel $|x|^{-\alpha}$</td>
+          <td>$\infty$</td>
+          <td style="color:#44FF88;">Yes if $\alpha < 2 \wedge d$</td>
+          <td style="color:#FF4444;">$\perp$</td>
+        </tr>
+        <tr>
+          <td>Bounded $L^1$ density</td>
+          <td>$< \infty$</td>
+          <td style="color:#44FF88;">Yes</td>
+          <td style="color:#44FF88;">$\sim$</td>
+        </tr>
+        <tr>
+          <td>Smooth compactly supp.</td>
+          <td>$< \infty$</td>
+          <td style="color:#44FF88;">Yes</td>
+          <td style="color:#44FF88;">$\sim$</td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="fragment fade-in" style="font-size:26px; margin-top:16px; color:#aaa;">
+      The boundary is precisely the trace-class property of the noise covariance.
+    </p>
+  </section>
+
+  <!-- NEW: Hierarchy of spectral conditions -->
+  <!-- Color convention for this slide (kept consistent throughout):
+       Dalang      = #CCFF33 (lime)
+       Upsilon(0)  = #ADD8E6 (blue)
+       Trace-class = #FFB6C1 (pink) -->
+  <section>
+    <h3 style="margin-bottom:4px;">A Hierarchy of Dalang's Condition</h3>
+    <p style="font-size:28px; color:#aaa; margin:0 0 28px;">
+      Three nested assumptions on the spectral measure $\widehat f$
+    </p>
+
+    <div style="display:flex; flex-direction:column; justify-content:space-between;
+                gap:34px; padding:6px 0;">
+      <br>
+      <!-- Dalang (outermost) -->
+      <div class="fragment fade-in" style="font-size:30px; line-height:1.55;">
+        <p style="margin:0 0 6px;">
+          <span style="color:#CCFF33; font-weight:bold;">Dalang's condition</span>
+          &nbsp;·&nbsp;
+          $\displaystyle \Upsilon(\beta) = (2\pi)^{-d}\!\int\!
+          \frac{\widehat f(\mathrm{d}\xi)}{\beta + |\xi|^2} < \infty$
+          for some $\beta>0$
+        </p>
+        <p style="margin:0; font-size:26px; color:#aaa;">
+          $\Rightarrow$ SHE solution exists in every dimension.
+        </p>
+      </div>
+
+      <!-- Upsilon(0) (middle) -->
+      <div class="fragment fade-in" style="font-size:30px; line-height:1.55;">
+        <p style="margin:0 0 6px;">
+          <span style="color:#ADD8E6; font-weight:bold;">$\Upsilon(0) < \infty$</span>
+          &nbsp;·&nbsp;
+          $\displaystyle \int\!\frac{\widehat f(\mathrm{d}\xi)}{|\xi|^2} < \infty$
+        </p>
+        <p style="margin:0; font-size:26px; color:#aaa;">
+          $\Rightarrow$ Diffusive CLT in $d \ge 3$
+          (the $1/|\xi|^2$ kernel tames some non-trace-class tails).
+        </p>
+      </div>
+
+      <!-- Trace-class (innermost) -->
+      <div class="fragment fade-in" style="font-size:30px; line-height:1.55;">
+        <p style="margin:0 0 6px;">
+          <span style="color:#FFB6C1; font-weight:bold;">Trace-class</span>
+          &nbsp;·&nbsp;
+          $\displaystyle \widehat f(\mathbb{R}^d) < \infty$
+        </p>
+        <p style="margin:0; font-size:26px; color:#aaa;">
+          $\Rightarrow$ The Singularity Dichotomy holds as stated.
+        </p>
+      </div>
+
+      <br>
+      <p class="fragment fade-in"
+         style="font-size:34px; margin:0; text-align:center; font-weight:bold;">
+        <span style="color:#FFB6C1;">Trace-class</span>
+        &nbsp;$\subset$&nbsp;
+        <span style="color:#ADD8E6;">$\{\Upsilon(0)<\infty\}$</span>
+        <span style="font-size:26px; color:#aaa; font-weight:normal;">
+          (in $d\ge 3$)
+        </span>
+        &nbsp;$\subset$&nbsp;
+        <span style="color:#CCFF33;">Dalang</span>
+      </p>
+    </div>
+  </section>
+
+  <!-- Bessel-type correlation regions (moved from dichotomy column) -->
+  <section>
+    <h3 style="margin-bottom:4px;">Bessel-type Correlation Kernels</h3>
+    <p style="font-size:26px; color:#aaa; margin:0 0 14px;">
+      Spectral-condition regions in $(s_1, s_2)$-parameter space
+    </p>
+
+    <div style="display:flex; align-items:center; justify-content:center;
+                gap:30px; margin-top:6px;">
+      <img src="./assets/bessel/bessel_correlation_regions-1.png"
+           alt="Bessel correlation function regions"
+           style="max-height:440px; width:auto;
+                  background:#fff; padding:12px; border-radius:8px;
+                  box-shadow:0 4px 18px rgba(0,0,0,0.5);" />
+
+      <div style="max-width:36%; text-align:left; font-size:22px; line-height:1.6;">
+        <p style="margin:0 0 10px;">
+          For Bessel &amp; related kernels with two parameters $(s_1, s_2)$,
+          the hierarchy of Dalang-type conditions
+          $\Upsilon(\beta), \Upsilon_\alpha(\beta), \Upsilon(0), \Upsilon_\alpha(0)$
+          carves the plane into <strong>nested regions</strong>.
+        </p>
+        <p style="margin:0 0 10px; font-size:20px; color:#ADD8E6;">
+          $s_1$ tunes the <em>blow-up at zero</em>;
+          &nbsp;$s_2$ tunes the <em>fatness of tail decay</em>.
+          Two knobs $\Rightarrow$ finer-grained noise taxonomy.
+        </p>
+        <p style="margin:0; color:#CCFF33; font-size:20px;">
+          [Chen &amp; Eisenberg '22, <em>J. Theor. Probab.</em>]
+        </p>
+      </div>
+    </div>
+  </section>
+
+</section>
+
+<!-- ============================================================
+     Act III coda — OPEN MYSTERY & STRONG DISORDER (own column)
+     ============================================================ -->
+<section>
+
+  <!-- Slide 23 — Open Mystery -->
+  <section>
+    <h3>The Open Mystery</h3>
+    <br>
+    <div class="mystery">
+      <p style="font-size:26px;">
+        We can prove $\mathbb{P}_\beta^W \perp \mathbb{P}_0$
+        with <strong>mathematical certainty</strong>.
+      </p>
+      <p class="fragment fade-in" style="font-size:26px; margin-top:16px;">
+        But we do not know <strong>what about the path</strong> gives it away.
+      </p>
+      <p class="fragment fade-in" style="font-size:26px; margin-top:16px; color:#FFB6C1;">
+        The discriminating set $A_W$ exists &mdash;
+        but <em>no explicit description is known</em>.
+      </p>
+    </div>
+    <br>
+    <p class="fragment fade-in" style="font-size:26px; margin-top:20px; font-style:italic; color:#aaa;">
+      &ldquo;The imposter is there. We just can't describe it.&rdquo;
+    </p>
+  </section>
+
+  <!-- Slide 24 — Strong Disorder Regime -->
+  <section>
+    <h3 style="margin-bottom:4px;">Strong Disorder Regime</h3>
+    <p style="font-size:26px; color:#aaa; margin:0 0 22px;">
+      Any of the CLT hypotheses fails: &nbsp;$\beta \ge \beta_0$ &nbsp;·&nbsp;
+      $d \le 2$ &nbsp;·&nbsp; $\Upsilon(0) = \infty$
+    </p>
+
+    <div style="display:flex; flex-direction:column; justify-content:space-between;
+                gap:28px; padding:6px 0;">
+      <br>
+      <!-- Path side: localization -->
+      <div class="fragment fade-in" style="font-size:30px; line-height:1.6;">
+        <p style="margin:0 0 10px;">
+          <span style="color:#CCFF33; font-weight:bold;">Path behavior:</span>
+          &nbsp;the polymer <em>localizes</em>.
+        </p>
+        <ul style="font-size:28px; line-height:1.5; margin:0;">
+          <li>Concentrates on favored corridors of the environment.</li>
+          <li>Endpoint distribution: non-Gaussian, largely unknown.</li>
+        </ul>
+      </div>
+
+      <!-- Fluctuation side: universality -->
+      <div class="fragment fade-in" style="font-size:30px; line-height:1.6;">
+        <p style="margin:0 0 10px;">
+          <span style="color:#FFB6C1; font-weight:bold;">Free-energy fluctuations:</span>
+          &nbsp;a <em>new universality class</em>, parametrized by the
+          spectral data of $f$ &mdash; yet to be discovered.
+        </p>
+        <ul style="font-size:28px; line-height:1.5; margin:0;">
+          <li><span style="color:#44FF88;">trace-class</span>
+            &rArr; Gaussian (Edwards&ndash;Wilkinson)?</li>
+          <li><span style="color:#FF6666;">non-trace-class</span>
+            &rArr; Variants of Tracy&ndash;Widom / KPZ in $d=1$?</li>
+          <li><span style="color:#CCFF33;">critical decay</span>
+            &rArr; New crossover laws?</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+</section>
+
+<!-- ============================================================
+     ACT IV — "The Arc & Thank You"  (20:00 – 25:00)  ALL LIVE
+     ============================================================ -->
+
+<section>
+
+  <!-- Slide 25 — 25-Year Arc -->
+  <section>
+    <h3 style="margin-bottom:4px;">A 25-Year Arc</h3>
+    <p style="font-size:26px; color:#aaa; margin:0 0 24px;">
+      From Dalang's 1999 condition to today's theorem
+    </p>
+
+    <table style="font-size:32px; width:90%; margin:0 auto;
+                  border-spacing: 0 22px; border-collapse: separate;">
+      <tr>
+        <td style="color:#CCFF33; text-align:right; padding-right:30px;
+                   vertical-align:top; width:14%;">1999</td>
+        <td style="padding: 6px 0;">
+          <strong>Dalang's condition</strong> &mdash; spectral threshold for SHE/SPDE
+        </td>
+      </tr>
+      <tr class="fragment fade-in">
+        <td style="color:#CCFF33; text-align:right; padding-right:30px;
+                   vertical-align:top;">2013</td>
+        <td style="padding: 6px 0;">
+          <strong>Chen&ndash;Dalang</strong>: rough IC for SHE in $d=1$ (thesis work)
+        </td>
+      </tr>
+      <tr class="fragment fade-in">
+        <td style="color:#CCFF33; text-align:right; padding-right:30px;
+                   vertical-align:top;">2014</td>
+        <td style="padding: 6px 0;">
+          Alberts&ndash;Khanin&ndash;Quastel: continuum polymer in $d=1$
+        </td>
+      </tr>
+      <tr class="fragment fade-in">
+        <td style="color:#CCFF33; text-align:right; padding-right:30px;
+                   vertical-align:top;">2019</td>
+        <td style="padding: 6px 0;">
+          Chen&ndash;Kim/Huang: rough IC for SHE for $d \ge 1$
+          under <strong>Dalang's condition</strong>
+        </td>
+      </tr>
+      <tr class="fragment fade-in">
+        <td style="color:#FFB6C1; text-align:right; padding-right:30px;
+                   vertical-align:top;">2026</td>
+        <td style="padding: 6px 0;">
+          <strong>Chen&ndash;Ouyang&ndash;Tindel&ndash;Xia</strong>:
+          $d$-dimensional polymers &mdash; the full story
+        </td>
+      </tr>
+    </table>
+  </section>
+
+  <!-- Slide 26 — Guitar in the desert (Sora visual poem, meditation before photos) -->
+  <section class="fullscreen-slide" data-background-color="#000">
+    <video class="FullscreenVideo" controls data-autoplay loop muted
+           src="./videos/guitar_desert.mp4"></video>
+
+    <!-- Personal reminiscence — three beats, each revealed on keypress. -->
+    <div class="guitar-reminiscence">
+      <p class="fragment fade-in" style="margin:0 0 6px;">
+        <em>Twenty years ago, I opened Walsh's notes.</em>
+      </p>
+      <p class="fragment fade-in" style="margin:0 0 6px;">
+        <em>Twelve years away &mdash; one full cycle.</em>
+      </p>
+      <p class="fragment fade-in" style="margin:0;">
+        <em>Today, back in Lausanne.</em>
+      </p>
+    </div>
+
+    <div class="video-credit">
+      Generated by <strong>Le Chen</strong> via OpenAI Sora &middot;
+      more at
+      <a href="https://github.com/SPDEngine/SPDE-Visuals" target="_blank"
+         style="color:#ADD8E6; text-decoration:none;">
+        github.com/SPDEngine/SPDE-Visuals
+      </a>
+    </div>
+  </section>
+
+  <!-- Slide 27 — Photos (diploma + farewell lunch) — title-less silent beat -->
+  <section>
+    <div class="photo-row" style="margin-top:40px;">
+      <img src="./assets/2013-04-19-Le-Dalang_Diploma.png" alt="PhD diploma with Robert Dalang, 2013" />
+      <img onerror="this.style.display='none'" src="./assets/dalang_farewell/_DSC1165.JPG" alt="Farewell lunch 2013" />
+    </div>
+    <p class="source" style="margin-top:18px;">
+      PhD diploma 04/19/1013 &amp; farewell lunch &mdash; EPFL, 2013
+    </p>
+  </section>
+
+  <!-- Slide 27b — Thank You, Robert (final word) -->
+  <section data-transition="fade">
+    <h2 style="color:#ADD8E6; margin-top:60px;">Thank you, Robert.</h2>
+    <br>
+    <p style="font-size:28px; color:#E8E8E8; line-height:1.75;">
+      For taking a chance on me at the very start.<br>
+      For introducing me to the field.<br>
+      For discovering the rough initial data together.<br>
+      <span class="fragment fade-in" style="color:#FFB6C1;">
+        For showing me what a mathematician can be &mdash;
+        meticulous, generous, upright.
+      </span><br>
+      For everything.
+    </p>
+    <br>
+    <p class="fragment fade-in dedication" style="font-size:28px;">
+      &ldquo;Two gifts, two decades, one theorem.&rdquo;
+    </p>
+  </section>
+
+  <!-- Slide 28 — References -->
+  <section>
+    <h3>References</h3>
+    <br>
+    <div style="font-size:26px; text-align:left; line-height:2;">
+      <p>[1] R. Dalang, <em>Extending martingale measure stochastic integrals...</em>,
+        Electron. J. Probab. (1999)</p>
+      <p>[2] L. Chen &amp; R. Dalang, <em>Moments and growth indices for the nonlinear SHE
+        with rough initial conditions</em>, Ann. Probab. (2015)</p>
+      <p>[3] T. Alberts, K. Khanin, J. Quastel, <em>The continuum directed random polymer</em>,
+        J. Stat. Phys. (2014)</p>
+      <p>[4] L. Chen, C. Ouyang, S. Tindel, P. Xia,
+        <em>A class of $d$-dimensional directed polymers in a Gaussian environment</em>,
+        arXiv:2603.06574 (2026)</p>
+    </div>
+    <br>
+    <div class="fragment fade-in" style="margin-top:20px; text-align:center;">
+      <p style="font-size:26px;">
+        More references &amp; podcasts:
+        <a href="https://spdes-bib.readthedocs.io/en/latest/Introduction.html" target="_blank">
+          SPDEs-Bib</a>
+      </p>
+    </div>
+  </section>
+
+  <!-- Funding -->
+  <section>
+    <h4>Acknowledgments</h4>
+    <p style="font-size:26px;">
+      Supported by NSF DMS-CAREER <a href="https://www.nsf.gov/awardsearch/showAward?AWD_ID=2443823">No.&nbsp;2443823</a> (2025&ndash;2030), <br>
+      and Simons Foundation No.&nbsp;959981 (2022&ndash;2027)
+    </p>
+  </section>
+
+  <!-- <!-1- Q&A back-pocket slide: NotebookLM 6-minute recap. -->
+  <!--      Only reached by pressing down/right past Acknowledgments — -->
+  <!--      use during Q&A if a recap is requested or to fill time. -1-> -->
+  <!-- <section class="fullscreen-slide" data-background-color="#000"> -->
+  <!--   <video class="FullscreenVideo" controls -->
+  <!--          src="./media/The-Singularity-Dichotomy-Trace-Class-Noise-and-Measure-Equiva.mp4"></video> -->
+  <!--   <div class="video-credit"> -->
+  <!--     NotebookLM summary &middot; <em>for Q&amp;A reference</em> -->
+  <!--   </div> -->
+  <!-- </section> -->
+
+</section>
+
+</div></div>
+
+<script src="dist/reveal.js"></script>
+<script src="plugin/math/math.js"></script>
+<script>
+  Reveal.initialize({
+    history: true,
+    transition: "linear",
+    slideNumber: true,
+    totalTime: 25 * 60,
+    // 16:9 slide canvas so fullscreen videos fill the viewport.
+    width: 1280,
+    height: 720,
+
+    mathjax2: {
+      config: "TeX-AMS_HTML-full",
+      TeX: {
+        Macros: {
+          R: "\\mathbb{R}",
+          E: "\\mathbb{E}",
+          P: "\\mathbb{P}",
+          Ups: "\\Upsilon",
+        },
+      },
+    },
+
+    plugins: [RevealMath.MathJax2],
+  });
+
+  document.addEventListener('DOMContentLoaded', function() {
+    var videos = document.querySelectorAll('.SimulationVideo, .FullscreenVideo');
+    videos.forEach(function(video) {
+      video.playbackRate = 1.15;
+      // Reveal resets currentTime when a slide becomes active; re-apply rate
+      // on 'play' so autoplayed videos pick up the default speed too.
+      video.addEventListener('play', function() { video.playbackRate = 1.25; });
+      video.addEventListener('ended', function() {
+        video.currentTime = Math.max(0, video.duration - 0.01);
+      });
+    });
+  });
+</script>
+</body></html>
